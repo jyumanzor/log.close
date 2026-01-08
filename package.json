@@ -1,0 +1,139 @@
+{
+  "name": "log-close",
+  "displayName": "Log Close - Session Tracker",
+  "description": "Capture conversations, track tasks, and review your coding sessions with AI-powered summaries",
+  "version": "0.1.0",
+  "publisher": "jennumanzor",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "logClose.startSession",
+        "title": "Log Close: Start New Session"
+      },
+      {
+        "command": "logClose.endSession",
+        "title": "Log Close: End Current Session"
+      },
+      {
+        "command": "logClose.summarizeNow",
+        "title": "Log Close: Summarize Current Session"
+      },
+      {
+        "command": "logClose.syncToGithub",
+        "title": "Log Close: Sync to GitHub"
+      },
+      {
+        "command": "logClose.openDailyReview",
+        "title": "Log Close: Open Daily Review"
+      },
+      {
+        "command": "logClose.exportMarkdown",
+        "title": "Log Close: Export to Markdown"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "logClose",
+          "title": "Log Close",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "logClose": [
+        {
+          "id": "logClose.sessions",
+          "name": "Sessions"
+        },
+        {
+          "id": "logClose.tasks",
+          "name": "Tasks"
+        },
+        {
+          "id": "logClose.timeline",
+          "name": "Timeline"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Log Close",
+      "properties": {
+        "logClose.captureTerminal": {
+          "type": "boolean",
+          "default": true,
+          "description": "Capture terminal output (Claude Code conversations)"
+        },
+        "logClose.captureFileChanges": {
+          "type": "boolean",
+          "default": true,
+          "description": "Track file modifications"
+        },
+        "logClose.captureClipboard": {
+          "type": "boolean",
+          "default": true,
+          "description": "Monitor clipboard for code snippets"
+        },
+        "logClose.sessionTimeoutMinutes": {
+          "type": "number",
+          "default": 10,
+          "description": "Minutes of inactivity before starting new session"
+        },
+        "logClose.gitRepo": {
+          "type": "string",
+          "default": "",
+          "description": "GitHub repository path for sync (e.g., username/vscode.capture)"
+        },
+        "logClose.gitSyncIntervalMinutes": {
+          "type": "number",
+          "default": 30,
+          "description": "How often to sync to GitHub (in minutes)"
+        },
+        "logClose.markdownOutputPath": {
+          "type": "string",
+          "default": "~/session-logs",
+          "description": "Directory for markdown session logs"
+        },
+        "logClose.clipboardPollIntervalSeconds": {
+          "type": "number",
+          "default": 2,
+          "description": "How often to check clipboard for changes"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.54.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.2",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.0",
+    "simple-git": "^3.22.0",
+    "strip-ansi": "^7.1.0"
+  }
+}
